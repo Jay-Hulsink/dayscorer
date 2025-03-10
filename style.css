@@ -1,0 +1,32 @@
+body {
+    background-color: #0b0b60;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-self: center;
+    background-color: #c0c070;
+    padding: 1vw;
+    border-radius: 1vw;
+}
+form * {
+    height: 5vh;
+    width: 75vw;
+    font-size: 2vh;
+}
+h1, h2 {
+    font-size: 4vh;
+    text-align: center;
+    color: #F0F0F0;
+}
+input {
+    
+}
+input:hover {
+    background-color: #d0d0d0;
+}
