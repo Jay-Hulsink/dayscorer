@@ -41,3 +41,7 @@ input:hover {
     background-color: #070720;
     border-bottom: 0.5vh solid #0a3a3a;
 }
+.warn {
+    font-size: 2vh;
+    color: rgb(230, 50, 50);
+}
