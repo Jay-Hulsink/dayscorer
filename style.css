@@ -4,29 +4,40 @@ body {
     justify-content: center;
     flex-direction: column;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
 }
 form {
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-self: center;
-    background-color: #c0c070;
+    background-color: #779696;
     padding: 1vw;
     border-radius: 1vw;
+    box-shadow: 1vh 1vh #0b0b0b;
 }
 form * {
-    height: 5vh;
-    width: 75vw;
+    min-height: 5vh;
+    min-width: 75vw;
     font-size: 2vh;
+    border: 0.5vh solid rgb(73, 80, 79);
+    /* border-radius: 1vh; */
+    margin-bottom: 1vh;
 }
 h1, h2 {
     font-size: 4vh;
     text-align: center;
     color: #F0F0F0;
 }
-input {
-    
+.submit_button {
+    background-color: #f0faf6;
+    align-self: center;
+    font-size: 3vh;
 }
 input:hover {
-    background-color: #d0d0d0;
+    background-color: #bebebe93;
+}
+.top_bar {
+    background-color: #070720;
+    border-bottom: 0.5vh solid #0a3a3a;
 }
