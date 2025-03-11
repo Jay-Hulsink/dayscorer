@@ -1,32 +1,57 @@
 <?php
 require("conn.php");
-
+$pass = "";
 $warn = "";
 
-if (isset($_POST['log']) && isset($_POST['login_username']) && isset($_POST['login_pass'])) {
-    $id = $connect->prepare("SELECT id FROM users WHERE username = ? AND pass = ?");
-    $id->execute([$_POST['username'], $_POST['login_pass']]);
-    $id = $id->fetch();
-    $id = $id[0];
-    if (is_int($id)) {
-        session_start();
-        $_SESSION['loggedInUser'] = $id;
-        header("location: index.php");
-        exit();
+if (isset($_POST['log']) && $_POST['login_username'] != "" && $_POST['login_pass'] != "") {
+    $fetch = $connect->prepare("SELECT id, pass FROM users WHERE username = ?");
+    $fetch->execute([$_POST['login_username']]);
+    $fetch = $fetch->fetchAll();
+    if (count($fetch) == 0) {
+        $warn = "No user found by that name";
+    } else {
+        $fetch = $fetch[0];
+        var_dump($fetch);   
+        $id = $fetch[0];
+        var_dump($id);
+        $pass = $fetch[1];
+        if(password_verify($_POST['login_pass'], $pass)) {
+            if (is_int($id)) {
+                session_start();
+                $_SESSION['loggedInUser'] = $id;
+                header("location: index.php");
+                exit();
+            }
+        } else {
+            $warn = "Incorrect username/password combination";
+        }
     }
 }
-if (isset($_POST['sign']) && isset($_POST['username']) && isset($_POST['pass_first']) && isset($_POST['pass_repeat']) && $_POST['pass_first'] == $_POST['pass_repeat']) {
-    $id = $connect->prepare("SELECT id FROM users WHERE username = ?");
-    $id->execute([$_POST['username']]);
-    $id = $id->fetch();
-    if ($id) {
-        $id = $id[0];
-        if (is_int($id)) {
-            $warn = "Username already taken, please try a different username";
-        }
+if (isset($_POST['sign']) && isset($_POST['username']) && $_POST['username'] != "" && isset($_POST['pass_first']) && $_POST['pass_first'] != "" &&
+    isset($_POST['pass_repeat']) && $_POST['pass_first'] == $_POST['pass_repeat']) {
+
+    $fetch = $connect->prepare("SELECT username FROM users WHERE username = ?");
+    $fetch->execute([$_POST['username']]);
+    $fetch = $fetch->fetchAll();
+    if (count($fetch) == 0) {     
+        $username = $_POST['username'];
+        $usercreation = $connect->prepare("INSERT INTO users (username, pass) VALUES (?, ?);");
+        $usercreation->execute([$username, password_hash($_POST['pass_first'], PASSWORD_DEFAULT)]);
+        $fetch = $connect->prepare("SELECT id FROM users where username = ?");
+        $fetch->execute([$username]);
+        $fetch = $fetch->fetch();
+        var_dump($fetch);
+        $id = $fetch['id'];
+        $str_id = strval($id); 
+        $tablename = "table_of_id_" . $str_id;
+        $usertablecreation = $connect->prepare("CREATE TABLE `?` (score int, focus enum('free time', 'travel', 'work', 'sleep'), achievement varchar(128), userscore int);");
+        $usertablecreation->execute([$tablename]);
     } else {
-        $usertablecreation = $connect->prepare("");
+        $warn = "Username already taken, please try a different username";
     }
+}
+if (isset($_POST['pass_first']) && isset($_POST['pass_repeat']) && $_POST['pass_first'] != $_POST['pass_repeat']) {
+    $warn = "Passwords do not match";
 }
 ?>
 
