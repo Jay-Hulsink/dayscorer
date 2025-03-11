@@ -16,12 +16,11 @@ if (isset($_POST['log']) && $_POST['login_username'] != "" && $_POST['login_pass
         var_dump($id);
         $pass = $fetch[1];
         if(password_verify($_POST['login_pass'], $pass)) {
-            if (is_int($id)) {
                 session_start();
+                intval($id);
                 $_SESSION['loggedInUser'] = $id;
                 header("location: index.php");
                 exit();
-            }
         } else {
             $warn = "Incorrect username/password combination";
         }
