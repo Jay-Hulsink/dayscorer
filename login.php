@@ -11,9 +11,9 @@ if (isset($_POST['log']) && $_POST['login_username'] != "" && $_POST['login_pass
         $warn = "No user found by that name";
     } else {
         $fetch = $fetch[0];
-        var_dump($fetch);   
+        // var_dump($fetch);   
         $id = $fetch[0];
-        var_dump($id);
+        // var_dump($id);
         $pass = $fetch[1];
         if(password_verify($_POST['login_pass'], $pass)) {
                 session_start();
@@ -39,7 +39,7 @@ if (isset($_POST['sign']) && isset($_POST['username']) && $_POST['username'] != 
         $fetch = $connect->prepare("SELECT id FROM users where username = ?");
         $fetch->execute([$username]);
         $fetch = $fetch->fetch();
-        var_dump($fetch);
+        // var_dump($fetch);
         $id = $fetch['id'];
         $str_id = strval($id); 
         $tablename = "table_of_id_" . $str_id;

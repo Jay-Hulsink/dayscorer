@@ -45,3 +45,14 @@ input:hover {
     font-size: 2vh;
     color: rgb(230, 50, 50);
 }
+.panel {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-self: center;
+    background-color: #779696;
+    padding: 1vw;
+    border-radius: 1vw;
+    box-shadow: 1vh 1vh #0b0b0b;
+    max-width: 90vw;
+}
