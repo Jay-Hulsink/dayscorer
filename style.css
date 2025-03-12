@@ -16,7 +16,7 @@ form {
     border-radius: 1vw;
     box-shadow: 1vh 1vh #0b0b0b;
 }
-form * {
+form *{
     min-height: 5vh;
     min-width: 75vw;
     font-size: 2vh;
@@ -55,4 +55,59 @@ input:hover {
     border-radius: 1vw;
     box-shadow: 1vh 1vh #0b0b0b;
     max-width: 90vw;
+}
+.popup {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-self: center;
+    background-color: #46695f;
+    padding: 1vw;
+    border-radius: 1vw;
+    box-shadow: 1vh 1vh #412727;
+    max-width: 90vw;
+    z-index: 1;
+    color: white;
+}
+button {
+    position: relative;
+    color: #070720;
+    border: 0.5vh solid rgb(73, 80, 79);
+    margin-bottom: 1vh;
+    min-height: 5vh;
+    min-width: 75vw;
+    font-size: 2vh;
+    /* border-radius: 1vh; */
+}
+button a  {
+    text-decoration: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    align-content: center;
+}
+.content {
+    background-color: #779696;
+    position: absolute;
+    left: 5vw;
+    right: 7vw;
+    top: 5vh;
+    bottom: 5vh;
+    border: 2vh solid rgb(73, 80, 79);
+    border-radius: 3vh;
+    box-shadow: 2vh 2vh #412727;
+}
+#intro {
+    background-color: #660030;
+    border: 2vh solid rgb(194, 212, 210);
+    box-shadow: 2vh 2vh #747474;
+}
+#introbody {
+    background-color: #385555
+}
+#fromtop {
+    position: relative;
+    top: 0;
 }

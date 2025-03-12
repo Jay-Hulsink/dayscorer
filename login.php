@@ -45,6 +45,12 @@ if (isset($_POST['sign']) && isset($_POST['username']) && $_POST['username'] != 
         $tablename = "table_of_id_" . $str_id;
         $usertablecreation = $connect->prepare("CREATE TABLE `?` (score int, focus enum('free time', 'travel', 'work', 'sleep'), achievement varchar(128), userscore int);");
         $usertablecreation->execute([$tablename]);
+        session_start();
+        intval($id);
+        $_SESSION['loggedInUser'] = $id;
+        $_SESSION['newuser'] = 1;
+        header("location: index.php");
+        exit();
     } else {
         $warn = "Username already taken, please try a different username";
     }

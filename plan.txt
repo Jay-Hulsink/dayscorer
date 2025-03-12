@@ -8,13 +8,13 @@ PROJECT:
         - PHP
         - HTML
         - SQL
-        - Javascript
-        - CSS of Bootstrap
+        - gsap (Javascript)
+        - CSS
 
 
     | ONDERDELEN VAN WEBSITE |:
-        - Een Voorpagina
         - Een Account registratie / inlogpagina
+        - Een Voorpagina
         - Een index pagina (details onder tussenkop 'details')
         - Een dagmeter pagina (om te kijken hoe je dag is gegaan aan de hand van wat je invult)
         - Een terugblik deel (om te kijken hoe je week is gegaan)
