@@ -67,21 +67,28 @@ if (isset($_POST['pass_first']) && isset($_POST['pass_repeat']) && $_POST['pass_
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <div class="top_bar"><h1>Dayscorer</h1></div>
+        <script src="gsap.min.js"></script>
+        <nav><h1>Dayscorer</h1></nav>
         <h2 class="warn"><?=$warn?></h2>
         <h2>Please Login</h2>
-            <form method="post">
+            <form id="loginform" method="post">
                 <input type="text" name="login_username" placeholder="username">
                 <input type="password" name="login_pass" placeholder="password">
                 <input class="submit_button" type="submit" name="log" value="log in">
             </form>
 
         <h2>Don't have an account? Sign up here</h2>
-            <form method="post">
+            <form id="signupform" method="post">
                 <input type="text" name="username" placeholder="username">
                 <input type="password" name="pass_first" placeholder="password">
                 <input type="password" name="pass_repeat" placeholder="repeat password">
                 <input class="submit_button" type="submit" name="sign" value="sign up">
             </form>
+            <script>
+                gsap.from("#loginform", {x: -3000, duration: 1});
+                gsap.from("#signupform", {x: -3000, duration: 1});
+                gsap.from("h2", {x: -3000, duration: 1, ease: "bounce.out"})
+                gsap.from("h1", {y: -500, duration: 1, ease: "bounce.in"})
+            </script>
     </body>
 </html>
