@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Dayscorer - introduction</title>
+        <title>Dayscorer - How-to</title>
         <link rel="stylesheet" href="style.css">
     </head>
-    <body id="introbody">
+    <body>
         <nav></nav>
         
-        <div id="intro" class="content">
-            <h1 id="fromtop">Intro</h1>
+        <div class="content">
+            <h1 id="fromtop">How-to</h1>
             
         </div>
     </body>
