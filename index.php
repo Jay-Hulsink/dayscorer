@@ -26,7 +26,11 @@ if (isset($my_dayta)) {
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <nav><button class="button_small"><a href="howto.php">How-to</a></button></nav>
+        <nav>
+            <button class="button_small"><a href="howto.php">How-to</a></button>
+            <h1>Dayscorer</h1>
+            <button class="button_small"><a href="myday.php">My day</a></button>
+        </nav>
         <div <?=$show_or_hide?>class='popup'>
             <p <?=$show_or_hide?>>You seem to be a new user, 
             do you want a guide to how this site works? if not, you can always find
@@ -35,8 +39,15 @@ if (isset($my_dayta)) {
             <button <?=$show_or_hide?>><a <?=$show_or_hide?> href='index.php?new=0'>no</a></button>
         </div>
         <div class="content">
-            <div class="panel"><div class="summary"><h2><?=$dayscore?></h2>
-        <p><?=$dayfocus?></p></div></div>
+            <div class="panel">
+                <div class="summary">
+                    <h2><?=$dayscore?></h2>
+                    <p><?=$dayfocus?></p>
+                </div>
+            </div>
+            <div class="panel">
+                
+            </div>
         </div>
     </body>
 </html>

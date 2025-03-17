@@ -6,7 +6,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
 }
-form {
+#loginform, #signupform {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -15,8 +15,9 @@ form {
     padding: 1vw;
     border-radius: 1vw;
     box-shadow: 1vh 1vh #0b0b0b;
+    max-width: 100%;
 }
-form *{
+#loginform *, #signupform * {
     min-height: 5vh;
     min-width: 75vw;
     font-size: 2vh;
@@ -29,9 +30,15 @@ h1, h2 {
     text-align: center;
     color: #F0F0F0;
 }
+h3 {
+    font-size: 2vh;
+    text-align: center;
+    color: #F0F0F0;
+}
 .submit_button {
     background-color: #f0faf6;
     align-self: center;
+    margin-top: 1vh;
     font-size: 3vh;
 }
 input:hover {
@@ -39,7 +46,10 @@ input:hover {
 }
 nav {
     background-color: #660030;
-    border-bottom: 2vh solid #aa8686;   
+    border-bottom: 2vh solid #aa8686;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 .warn {
     font-size: 2vh;
@@ -49,13 +59,11 @@ nav {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    align-self: center;
     padding: 1vw;
     border-radius: 1vw;
     box-shadow: 1vh 1vh #0b0b0b;
     margin: 2vh;
-    max-width: 35vw;
-    max-height: 35vh ;
+    max-height: 50vh ;
     border: 0.5vh solid gray;
     border-radius: 1vh;
     background-color: #375e5e81;
@@ -94,14 +102,18 @@ button a  {
     align-content: center;
 }
 .content {
+    display: flex;
     background-color: #213333;
+    justify-content: center;
     position: static;
     margin: 1vh;
     border-radius: 3vh;
     border: 2vh solid rgb(194, 212, 210);
     box-shadow: 2vh 2vh #2c2a2a;
-    margin-right: 3vh;
-    flex-wrap: wrap;
+    margin-right: 2vh;
+    padding-bottom: 2vh;
+    flex-direction: column;
+    margin-left: 0;
 }
 #fromtop {
     position: relative;
@@ -124,8 +136,77 @@ button a  {
     color: #070720;
 }
 .summary {
-    min-width: 15vw;
-    min-height: 15vh;
-    max-width: 30vw;
+    min-width: 20vw;
+    min-height: 20vh;
+    max-width: 90%;
+    max-height: 30vh;
+}
+table {
+    max-width: 100%;
+}
+tr {
+    display: flex;
+    max-width: 100%;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+td * {
     max-height: 20vh;
+    min-height: 5vh;
+    min-width: 80%;
+    max-width: 100%;
+}
+th {
+    max-height: 20vh;
+    min-height: 5vh;
+    min-width: 20%;
+    max-width: 100%;
+    color: #F0F0F0;
+    font-size: 2vh;
+    justify-self: center;
+}
+.table_header_row {
+    justify-content: space-around;
+}
+td {
+    width: 24%;
+    display: flex;
+    justify-content: center;
+}
+#dayform {
+    display: flex;
+    margin-bottom: 2vh;
+    max-width: 100%;
+    justify-content: center;
+    flex-direction: column;
+}
+.field {
+    border-radius: 1vh;
+}
+.textfield {
+    width: 100%;
+    font-size: 2vh;
+}
+.big_td {
+    width: 50vw;
+}
+.rowww {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.slider {
+    width: 90%;
+}
+#margtop {
+    margin-top: 3vh;
+}
+footer {
+    display: flex;
+    position: absolute;
+    justify-content: space-around;
+    bottom: 0;
+    background-color: #660030;
+    width: 100vw;
 }
