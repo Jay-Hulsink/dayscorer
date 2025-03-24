@@ -1,7 +1,8 @@
 <?php
 require("conn.php");
 $pass = "";
-$warn = "";
+$warn = "Ñ";
+$hide = 'hidden';
 
 session_start();
 
@@ -18,11 +19,10 @@ if (isset($_POST['log']) && $_POST['login_username'] != "" && $_POST['login_pass
     $fetch = $fetch->fetchAll();
     if (count($fetch) == 0) {
         $warn = "No user found by that name";
+        $hide = '';
     } else {
         $fetch = $fetch[0];
-        // var_dump($fetch);   
         $id = $fetch[0];
-        // var_dump($id);
         $pass = $fetch[1];
         if(password_verify($_POST['login_pass'], $pass)) {
                 session_start();
@@ -32,6 +32,7 @@ if (isset($_POST['log']) && $_POST['login_username'] != "" && $_POST['login_pass
                 exit();
         } else {
             $warn = "Incorrect username/password combination";
+            $hide = '';
         }
     }
 }
@@ -48,29 +49,30 @@ if (isset($_POST['sign']) && isset($_POST['username']) && $_POST['username'] != 
         $fetch = $connect->prepare("SELECT id FROM users where username = ?");
         $fetch->execute([$username]);
         $fetch = $fetch->fetch();
-        // var_dump($fetch);
         $id = $fetch['id'];
         $str_id = strval($id); 
         $tablename = "table_of_id_" . $str_id;
-        $usertablecreation = $connect->prepare("CREATE TABLE table_of_id_$str_id (dayname varchar(128), score int, sleep int, work int, rest int, outside int, highlight varchar(128), userscore int);");
+        $usertablecreation = $connect->prepare("CREATE TABLE table_of_id_$str_id (dayname varchar(128), score int, sleep int, work int, rest int, outside int, highlight varchar(128), userscore int, weekofyear int);");
         $usertablecreation->execute();
         session_start();
         intval($id);
         $_SESSION['loggedInUser'] = $id;
         $_SESSION['newuser'] = 1;
-        header("location: howto.php");
+        header("location: index.php");
         exit();
     } else {
         $warn = "Username already taken, please try a different username";
+        $hide = '';
     }
 }
 if (isset($_POST['pass_first']) && isset($_POST['pass_repeat']) && $_POST['pass_first'] != $_POST['pass_repeat']) {
     $warn = "Passwords do not match";
+    $hide = '';
 }
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>Dayscorer - login</title>
         <link rel="stylesheet" href="style.css">
@@ -78,7 +80,7 @@ if (isset($_POST['pass_first']) && isset($_POST['pass_repeat']) && $_POST['pass_
     <body>
         <script src="gsap.min.js"></script>
         <nav><h1>Dayscorer</h1></nav>
-        <h2 class="warn"><?=$warn?></h2>
+        <h2 <?=$hide?> class="warn"><?=$warn?></h2>
             <h2>Please Login</h2>
                 <form id="loginform" method="post">
                     <input type="text" name="login_username" placeholder="username">

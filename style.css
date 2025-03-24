@@ -64,6 +64,7 @@ nav {
     border-radius: 1vw;
     box-shadow: 1vh 1vh #0b0b0b;
     margin: 2vh;
+    max-width: 100%;
     max-height: 50vh ;
     border: 0.5vh solid gray;
     border-radius: 1vh;
@@ -118,7 +119,9 @@ button a  {
     margin-left: 0;
     left: 1vw;
     right: 1vw;
+    max-width: 100vw;
     top: 15vh;
+    margin-bottom: 2vh;
 }
 #fromtop {
     position: relative;
@@ -136,13 +139,12 @@ button a  {
     font-size: 2vh;
     /* border-radius: 1vh; */
     aspect-ratio: 3/1;
-}
-.button_small a {
-    color: #070720;
+    text-align: center;
+    background-color: whitesmoke;
 }
 .summary {
     min-width: 20vw;
-    min-height: 20vh;
+    min-height: 10vh;
     max-width: 90%;
     max-height: 30vh;
 }
@@ -218,6 +220,18 @@ td {
     height: 5vh;
     text-align: center;
 }
+.submit_button_2 {
+    background-color: #f0faf6;
+    align-self: center;
+    margin-top: 1vh;
+    font-size: 3vh;
+    margin-top: 3vh;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    width: 7vh;
+    height: 5vh;
+    text-align: center;
+}
 footer {
     display: flex;
     position: absolute;
@@ -242,6 +256,8 @@ footer {
     display: flex;
     justify-content: center;
     border-radius: 4vh;
+    height: 100%;
+
 }
 .progress_bar_background {
     background-color: #f80e0e;
@@ -251,8 +267,56 @@ footer {
     height: 10vh;
     border-radius: 4vh;
 }
-p {
-    text-align: center;
+ul, p {
+    align-self: center;
     color: white;
+    font-size: 2vh;
+    margin-left: 1vw;
+    margin-right: 1vw;
+}
+.daytable {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+.dayrow {
+    width: 100%;
+    flex-wrap: nowrap;
+    background-color: #213333;
+    justify-content: space-around;
+    border-bottom: #215035 dashed 2px;
+}
+th {
+    max-height: 10%;
+    min-height: 5%;
+    min-width: 5%;
+    max-width: 10%;
+    min-width: 10%;
     font-size: 2vw;
+}
+.daytd {
+    min-width: 5%;
+    min-height: 5%;
+    min-width: 5%;
+    max-width: 10%;
+    min-width: 10%;
+    display: flex;
+    font-size: 1vw;
+    justify-content: center;
+    color: white;
+}
+.spread {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.centre {
+    display: flex;
+    align-items: center;
+}
+a {
+    text-decoration: none;
+    align-items: center;
 }

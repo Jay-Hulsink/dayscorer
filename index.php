@@ -4,10 +4,15 @@ $show_or_hide = "hidden";
 $popup = "";
 $dayfocus = "No data yet";
 $dayscore = "";
+$show_1 = 'hidden';
+$show_2 = 'hidden';
+$closs = '';
+$table_output = '';
 
 require "conn.php";
 
 $current_day = date('l');
+$current_week = date('W');
 
 
 session_start();
@@ -15,55 +20,84 @@ if (!isset($_SESSION['loggedInUser'])) {
     header("location: login.php");
     exit();
 }
-
-
-if (isset($_GET['new'])) {
-    if ($_GET['new'] == 0) {
-        $_SESSION['newuser'] = false;
-        header("location: myday.php");
-        exit;
-    }
-}
-if (isset($_SESSION['newuser']) && $_SESSION['newuser'] == true) {
-    $show_or_hide = "";
-
-}
-if (!isset($_SESSION['newuser']) || $_SESSION['newuser'] == false) {
-    $qry = $connect->prepare("SELECT score, highlight FROM table_of_id_" . $_SESSION['loggedInUser']);
-    $qry->execute();
-    $data = $qry->fetchAll();
-    if ($data) {
-        $data = $data[0];
-        foreach($data as $num => $val) {
-            if (is_numeric($num)) {
-                unset($data[$num]);
-            } else {
-                $data[$num] = $val;
-            } 
+if (!isset($_GET['week'])) {
+        
+    if (isset($_GET['new'])) {
+        if ($_GET['new'] == 0) {
+            $_SESSION['newuser'] = false;
         }
     }
+    if (isset($_SESSION['newuser']) && $_SESSION['newuser'] == true) {
+        $show_or_hide = "";
+
+    }
+    if (!isset($_SESSION['newuser']) || $_SESSION['newuser'] == false) {
+        $qry = $connect->prepare("SELECT score, highlight FROM table_of_id_" . $_SESSION['loggedInUser']);
+        $qry->execute();
+        $daydata = $qry->fetchAll();
+        if ($daydata) {
+            $daydata = $daydata[0];
+            foreach($daydata as $num => $val) {
+                if (is_numeric($num)) {
+                    unset($daydata[$num]);
+                } else {
+                    $daydata[$num] = $val;
+                } 
+            }
+        }
+    }
+    if (isset($daydata['score']) && is_numeric($daydata['score'])) {
+        $daydata['highlight'] = "Your highlight of today: " . $daydata['highlight'];
+        $closs = 'class="progress_bar_background"';
+    }
+    if (!isset($daydata['score'])) {
+        $daydata['score'] = '';
+        $daydata['highlight'] = 'No data yet';
+    }
+    $show_1 = '';
+} else {
+    $show_2 = '';
+    $qry = $connect->prepare("SELECT dayname, score, work, sleep, rest, outside, highlight FROM table_of_id_" . $_SESSION['loggedInUser'] . " WHERE weekofyear = ?");
+    $qry->execute([$current_week]);
+    $weekdata = $qry->fetchAll();
+    $i = 0;
+    if ($weekdata) {
+        foreach ($weekdata as $slot) {
+            foreach($weekdata[$i] as $num => $val) {
+                if (is_numeric($num)) {
+                    unset($weekdata[$i][$num]);
+                } else {
+                    $weekdata[$i][$num] = $val;
+                } 
+            }
+            $i++;
+        }
+    }
+
+
+foreach ($weekdata as $row) {
+    $table_output .= '<tr class="dayrow"' .  $show_2 . '>';
+    foreach ($row as $key => $val) {
+        $table_output .= '<td class="daytd "' . $show_2 . '>' . $val . '</td>';
+    }
+    $table_output .= '</tr>';
 }
-if (isset($data['score']) && is_numeric($data['score'])) {
-    $data['highlight'] = "Your highlight of today: " . $data['highlight'];
-}
-if (!isset($data['score'])) {
-    $data['score'] = '';
-    $data['highlight'] = 'No data yet';
+
 }
 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>Dayscorer - home</title>
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <nav>
-            <button class="button_small"><a href="howto.php">How-to</a></button>
-            <button class="button_small"><a href="myday.php">My day</a></button>
-            <button class="button_small"><a href="index.php">Home</a></button>
-            <button class="button_small"><a href="login.php?logout">Logout</a></button>
+            <a class="button_small" href="howto.php">How-to</a>
+            <a class="button_small" href="myday.php">My day</a>
+            <a class="button_small" href="index.php">Home</a>
+            <a class="button_small" href="login.php?logout">Logout</a>
         </nav>
         <div <?=$show_or_hide?>class='popup'>
             <p <?=$show_or_hide?>>You seem to be a new user, 
@@ -74,15 +108,38 @@ if (!isset($data['score'])) {
         </div>
         <div class="content">
             <div class="panel">
-                <div class="summary">
-                    <h2><?=$data['score']?></h2>
-                    <h3><?=$data['highlight']?></h3>
+                <table class="daytable" <?=$show_2?>>
+                        <tr class="dayrow" <?=$show_2?>>
+                            <th <?=$show_2?>>Day</th>
+                            <th <?=$show_2?>>score</th>
+                            <th <?=$show_2?>>hours of sleep</th>
+                            <th <?=$show_2?>>hours of work</th>
+                            <th <?=$show_2?>>enough rest</th>
+                            <th <?=$show_2?>>Hours outside</th>
+                            <th <?=$show_2?>>highlight of day</th>
+                        </tr>
+                        <?=$table_output?>
+                    </table>
+                <div <?=$closs?>>
+                    <div <?=$show_1?> class="progress_bar" style="width: <?=$daydata['score']?>%;">
+                        <h3 class="big_h3" <?=$show_1?>><?=$daydata['score']?></h3>
+                    </div>
                 </div>
+                <div <?=$show_1?> class="summary">
+                    <h3 <?=$show_1?>><?=$daydata['highlight']?></h3>
+                </div>
+            </div>
+            <div class="panel">
+                <button <?=$show_1?> class="button_small"><a href="index.php?week">Go to weekview</a></button>
+                <button <?=$show_2?> class="button_small"><a href="index.php">Go to dayview</a></button>
             </div>
         </div>
         <footer>
-            <h1>Dayscorer</h1>
-            <h3>Current day: <?=$current_day?></h3>
+            <div class="spread">
+                <h3 class="centre"> Current day: <?=$current_day?></h3>
+                <h1>Dayscorer</h1>
+                <h3 class="centre">current week of the year: <?=$current_week?></h3>
+            </div>
         </footer>
     </body>
 </html>

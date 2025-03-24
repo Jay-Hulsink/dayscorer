@@ -8,6 +8,8 @@ if (!isset($_SESSION['loggedInUser'])) {
 require "conn.php";
 
 $current_day = date('l');
+$current_week = date('W');
+
 $dayscore = 0;
 $user_calc_data = $connect->prepare("SELECT * FROM table_of_id_" . $_SESSION['loggedInUser'] . " WHERE dayname = ?;");
 if ($user_calc_data) {
@@ -43,17 +45,17 @@ if ($dayscore) {
 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>Dayscorer - Reveal</title>
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <nav>
-            <button class="button_small"><a href="howto.php">How-to</a></button>
-            <button class="button_small"><a href="myday.php">My day</a></button>
-            <button class="button_small"><a href="index.php">Home</a></button>
-            <button class="button_small"><a href="login.php?logout">Logout</a></button>
+            <a class="button_small" href="howto.php">How-to</a>
+            <a class="button_small" href="myday.php">My day</a>
+            <a class="button_small" href="index.php">Home</a>
+            <a class="button_small" href="login.php?logout">Logout</a>
         </nav>        
         <div class="content">
             <h2 id="fromtop">Your dayscore is.....</h2>
@@ -68,8 +70,11 @@ if ($dayscore) {
             </div>
         </div>
         <footer>
-            <h1>Dayscorer</h1>
-            <h3>Current day: <?=$current_day?></h3>
+            <div class="spread">
+                <h3 class="centre"> Current day: <?=$current_day?></h3>
+                <h1>Dayscorer</h1>
+                <h3 class="centre">current week of the year: <?=$current_week?></h3>
+            </div>
         </footer>
     </body>
 </html>

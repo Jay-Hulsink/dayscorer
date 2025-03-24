@@ -9,7 +9,7 @@ $show_page_four = 'hidden';
 $hide_submit = '';
 
 $current_day = date('l');
-
+$current_week = date('W');
 session_start();
 if (!isset($_SESSION['loggedInUser'])) {
     header("location: login.php");
@@ -25,8 +25,8 @@ if (isset($_POST['submit_2']) && $_POST['submit_2'] ==  "Next page") {
     $hide_submit = 'hidden';
     $insert = $connect->prepare("DELETE FROM table_of_id_" . $_SESSION['loggedInUser'] . " WHERE dayname = ?;");
     $insert->execute([$current_day]);
-    $insert = $connect->prepare("INSERT INTO table_of_id_" . $_SESSION['loggedInUser'] . " (dayname, sleep, work, outside) VALUES (?, ?, ?, ?);");
-    $insert = $insert->execute([$current_day, $_POST['sleephours'], $_POST['workhours'], $_POST['outsidehours']]);
+    $insert = $connect->prepare("INSERT INTO table_of_id_" . $_SESSION['loggedInUser'] . " (dayname, sleep, work, outside, weekofyear) VALUES (?, ?, ?, ?, ?);");
+    $insert = $insert->execute([$current_day, $_POST['sleephours'], $_POST['workhours'], $_POST['outsidehours'], $current_week]);
 }
 if (isset($_POST['submit_3']) && $_POST['submit_3'] == 'no') {
     $show_page_three = '';
@@ -54,18 +54,20 @@ if (isset($_POST['submit_5']) && $_POST['submit_5'] == "Next page") {
 }
 
 
+
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>Dayscorer - My day</title>
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <nav>
-            <button class="button_small"><a href="howto.php">How-to</a></button>
-            <button class="button_small"><a href="myday.php">My day</a></button>
-            <button class="button_small"><a href="login.php?logout">Logout</a></button>
+            <a class="button_small" href="howto.php">How-to</a>
+            <a class="button_small" href="myday.php">My day</a>
+            <a class="button_small" href="index.php">Home</a>
+            <a class="button_small" href="login.php?logout">Logout</a>
         </nav>               
         <div class="content">
             <form id='dayform' method="post">
@@ -84,9 +86,6 @@ if (isset($_POST['submit_5']) && $_POST['submit_5'] == "Next page") {
                 <div class="rowww">
                     <h3 <?=$show_page_four?>>
                         awful
-                    </h3>
-                    <h3 <?=$show_page_four?>>
-                        
                     </h3>
                     <h3 <?=$show_page_four?>>
                         great
@@ -116,28 +115,33 @@ if (isset($_POST['submit_5']) && $_POST['submit_5'] == "Next page") {
                         </td>
                     </tr>
                     <tr>
-                    </tr>
-                    <tr>
+                        <td hidden ></td>
                         <td class="big_td">
                             <input class="textfield" type="text" name="highlight" <?=$show_page_three?>>
                         </td>
+                        <td hidden ></td>
                     </tr>
                     <tr>
                         <td class="slider">
                             <input type="range" min="0" max="10" class="slider" name="userscore" <?=$show_page_four?>>
                         </td>
+                        <td hidden ></td>
+                        <td hidden ></td>
                     </tr>
                 </table>
                 <input id="margtop_main" class="submit_button" type="submit" <?=$hide_submit?> name="submit_<?=$page?>" value="Next page">
                 <div class="row_class">
-                <input id="margtop" class="submit_button" type="submit" <?=$show_page_two?> name="submit_<?=$page?>" value="yes">
-                <input id="margtop" class="submit_button" type="submit" <?=$show_page_two?> name="submit_<?=$page?>" value="no">
+                <input class="submit_button_2" type="submit" <?=$show_page_two?> name="submit_<?=$page?>" value="yes">
+                <input  class="submit_button_2" type="submit" <?=$show_page_two?> name="submit_<?=$page?>" value="no">
                 </div>
             </form>
         </div>
         <footer>
-            <h1>Dayscorer</h1>
-            <h3>Current day: <?=$current_day?></h3>
+            <div class="spread">
+                <h3 class="centre"> Current day: <?=$current_day?></h3>
+                <h1>Dayscorer</h1>
+                <h3 class="centre">current week of the year: <?=$current_week?></h3>
+            </div>
         </footer>
     </body>
 </html>
