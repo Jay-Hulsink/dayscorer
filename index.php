@@ -1,35 +1,69 @@
 <?php
+
 $show_or_hide = "hidden";
 $popup = "";
-$dayfocus = "";
+$dayfocus = "No data yet";
 $dayscore = "";
+
+require "conn.php";
+
+$current_day = date('l');
+
+
 session_start();
 if (!isset($_SESSION['loggedInUser'])) {
     header("location: login.php");
+    exit();
 }
+
+
 if (isset($_GET['new'])) {
     if ($_GET['new'] == 0) {
         $_SESSION['newuser'] = false;
+        header("location: myday.php");
+        exit;
     }
 }
 if (isset($_SESSION['newuser']) && $_SESSION['newuser'] == true) {
     $show_or_hide = "";
+
 }
-if (isset($my_dayta)) {
-    $dayfocus = "Your focus of the day: ";
-} 
+if (!isset($_SESSION['newuser']) || $_SESSION['newuser'] == false) {
+    $qry = $connect->prepare("SELECT score, highlight FROM table_of_id_" . $_SESSION['loggedInUser']);
+    $qry->execute();
+    $data = $qry->fetchAll();
+    if ($data) {
+        $data = $data[0];
+        foreach($data as $num => $val) {
+            if (is_numeric($num)) {
+                unset($data[$num]);
+            } else {
+                $data[$num] = $val;
+            } 
+        }
+    }
+}
+if (isset($data['score']) && is_numeric($data['score'])) {
+    $data['highlight'] = "Your highlight of today: " . $data['highlight'];
+}
+if (!isset($data['score'])) {
+    $data['score'] = '';
+    $data['highlight'] = 'No data yet';
+}
+
 ?>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Dayscorer - main page</title>
+        <title>Dayscorer - home</title>
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <nav>
             <button class="button_small"><a href="howto.php">How-to</a></button>
-            <h1>Dayscorer</h1>
             <button class="button_small"><a href="myday.php">My day</a></button>
+            <button class="button_small"><a href="index.php">Home</a></button>
+            <button class="button_small"><a href="login.php?logout">Logout</a></button>
         </nav>
         <div <?=$show_or_hide?>class='popup'>
             <p <?=$show_or_hide?>>You seem to be a new user, 
@@ -41,13 +75,14 @@ if (isset($my_dayta)) {
         <div class="content">
             <div class="panel">
                 <div class="summary">
-                    <h2><?=$dayscore?></h2>
-                    <p><?=$dayfocus?></p>
+                    <h2><?=$data['score']?></h2>
+                    <h3><?=$data['highlight']?></h3>
                 </div>
             </div>
-            <div class="panel">
-                
-            </div>
         </div>
+        <footer>
+            <h1>Dayscorer</h1>
+            <h3>Current day: <?=$current_day?></h3>
+        </footer>
     </body>
 </html>

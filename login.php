@@ -3,6 +3,15 @@ require("conn.php");
 $pass = "";
 $warn = "";
 
+session_start();
+
+if (isset($_GET['logout'])) {
+    session_destroy();
+}
+
+
+$current_day = date('l');
+
 if (isset($_POST['log']) && $_POST['login_username'] != "" && $_POST['login_pass'] != "") {
     $fetch = $connect->prepare("SELECT id, pass FROM users WHERE username = ?");
     $fetch->execute([$_POST['login_username']]);
@@ -43,13 +52,13 @@ if (isset($_POST['sign']) && isset($_POST['username']) && $_POST['username'] != 
         $id = $fetch['id'];
         $str_id = strval($id); 
         $tablename = "table_of_id_" . $str_id;
-        $usertablecreation = $connect->prepare("CREATE TABLE `?` (score int, focus enum('free time', 'travel', 'work', 'sleep'), achievement varchar(128), userscore int);");
-        $usertablecreation->execute([$tablename]);
+        $usertablecreation = $connect->prepare("CREATE TABLE table_of_id_$str_id (dayname varchar(128), score int, sleep int, work int, rest int, outside int, highlight varchar(128), userscore int);");
+        $usertablecreation->execute();
         session_start();
         intval($id);
         $_SESSION['loggedInUser'] = $id;
         $_SESSION['newuser'] = 1;
-        header("location: index.php");
+        header("location: howto.php");
         exit();
     } else {
         $warn = "Username already taken, please try a different username";
