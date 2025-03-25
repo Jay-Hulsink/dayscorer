@@ -55,6 +55,7 @@ nav {
 .warn {
     font-size: 2vh;
     color: rgb(230, 50, 50);
+    font-weight: bolder;
 }
 .panel {
     display: flex;
@@ -141,12 +142,15 @@ button a  {
     aspect-ratio: 3/1;
     text-align: center;
     background-color: whitesmoke;
+    justify-content: center;
 }
 .summary {
     min-width: 20vw;
     min-height: 10vh;
     max-width: 90%;
     max-height: 30vh;
+    align-self: center;
+    text-align: center;
 }
 table {
     max-width: 100%;
@@ -177,7 +181,7 @@ th {
     justify-content: space-around;
 }
 td {
-    width: 24%;
+    max-width: 24%;
     display: flex;
     justify-content: center;
 }
@@ -191,6 +195,7 @@ td {
 .field {
     border-radius: 1vh;
     font-size: 2vh;
+    width: 20vw;
 }
 .textfield {
     width: 100%;
@@ -248,7 +253,7 @@ footer {
     margin-right: 1vw;
     text-align: center;
 }
-.big_h3 {
+.big_p {
     font-size: 3vh;
 }
 .progress_bar {
@@ -292,9 +297,9 @@ th {
     max-height: 10%;
     min-height: 5%;
     min-width: 5%;
-    max-width: 10%;
+    max-width: 30%;
     min-width: 10%;
-    font-size: 2vw;
+    font-size: 2vh;
 }
 .daytd {
     min-width: 5%;
@@ -319,4 +324,28 @@ th {
 a {
     text-decoration: none;
     align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+.button_small_2 {
+    position: relative;
+    color: #070720;
+    border: 0.5vh solid rgb(73, 80, 79);
+    margin-bottom: 1vh;
+    min-height: 5vh;
+    min-width: 10vw;
+    max-width: 25vw;
+    max-height: 10vh;
+    font-size: 2vh;
+    /* border-radius: 1vh; */
+    aspect-ratio: 3/1;
+    text-align: center;
+    background-color: whitesmoke;
+    justify-content: center;
+}
+.org {
+    display: flex;
+    flex-direction: row;
+    height: 5vh;
+    justify-content: space-around;
 }

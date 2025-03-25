@@ -17,6 +17,7 @@ $current_week = date('W');
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+        <script src="gsap.min.js"></script>
         <nav>
             <a class="button_small" href="howto.php">How-to</a>
             <a class="button_small" href="myday.php">My day</a>
@@ -46,5 +47,9 @@ $current_week = date('W');
                 <h3 class="centre">current week of the year: <?=$current_week?></h3>
             </div>
         </footer>
+        <script>
+            gsap.from('.content', {x: -1500});
+            gsap.from('.button_small', {y: -1000});
+        </script>
     </body>
 </html>

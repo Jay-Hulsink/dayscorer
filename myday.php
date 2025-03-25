@@ -63,6 +63,7 @@ if (isset($_POST['submit_5']) && $_POST['submit_5'] == "Next page") {
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+        <script src="gsap.min.js"></script>
         <nav>
             <a class="button_small" href="howto.php">How-to</a>
             <a class="button_small" href="myday.php">My day</a>
@@ -122,10 +123,10 @@ if (isset($_POST['submit_5']) && $_POST['submit_5'] == "Next page") {
                         <td hidden ></td>
                     </tr>
                     <tr>
+                        <td hidden ></td>
                         <td class="slider">
                             <input type="range" min="0" max="10" class="slider" name="userscore" <?=$show_page_four?>>
                         </td>
-                        <td hidden ></td>
                         <td hidden ></td>
                     </tr>
                 </table>
@@ -143,5 +144,9 @@ if (isset($_POST['submit_5']) && $_POST['submit_5'] == "Next page") {
                 <h3 class="centre">current week of the year: <?=$current_week?></h3>
             </div>
         </footer>
+        <script>
+            gsap.from('.content', {x: -1500});
+            gsap.from('.button_small', {y: -1000});
+        </script>
     </body>
 </html>

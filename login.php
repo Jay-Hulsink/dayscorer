@@ -80,7 +80,7 @@ if (isset($_POST['pass_first']) && isset($_POST['pass_repeat']) && $_POST['pass_
     <body>
         <script src="gsap.min.js"></script>
         <nav><h1>Dayscorer</h1></nav>
-        <h2 <?=$hide?> class="warn"><?=$warn?></h2>
+        <p <?=$hide?> class="warn"><?=$warn?></p>
             <h2>Please Login</h2>
                 <form id="loginform" method="post">
                     <input type="text" name="login_username" placeholder="username">
