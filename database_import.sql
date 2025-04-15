@@ -6,3 +6,14 @@ create table users (
     username varchar(60),
     pass varbinary(255)
 );
+CREATE TABLE weekdata (dayname varchar(128),
+    score int,
+    sleep int,
+    work int,
+    rest int,
+    outside int,
+    highlight varchar(128),
+    userscore int,
+    weekofyear int,
+    userid int,
+    FOREIGN KEY (userid) REFERENCES users(id));

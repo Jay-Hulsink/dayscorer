@@ -23,32 +23,32 @@ if (isset($_POST['submit_2']) && $_POST['submit_2'] ==  "Next page") {
     $show_page_two = '';
     $page = 3;
     $hide_submit = 'hidden';
-    $insert = $connect->prepare("DELETE FROM table_of_id_" . $_SESSION['loggedInUser'] . " WHERE dayname = ?;");
-    $insert->execute([$current_day]);
-    $insert = $connect->prepare("INSERT INTO table_of_id_" . $_SESSION['loggedInUser'] . " (dayname, sleep, work, outside, weekofyear) VALUES (?, ?, ?, ?, ?);");
-    $insert = $insert->execute([$current_day, $_POST['sleephours'], $_POST['workhours'], $_POST['outsidehours'], $current_week]);
+    $insert = $connect->prepare("DELETE FROM weekdata WHERE dayname = ? AND userid = ? AND weekofyear = ?;");
+    $insert->execute([$current_day, $_SESSION['loggedInUser'], $current_week]);
+    $insert = $connect->prepare("INSERT INTO weekdata (dayname, sleep, work, outside, weekofyear, userid) VALUES (?, ?, ?, ?, ?, ?);");
+    $insert = $insert->execute([$current_day, $_POST['sleephours'], $_POST['workhours'], $_POST['outsidehours'], $current_week, $_SESSION['loggedInUser']]);
 }
 if (isset($_POST['submit_3']) && $_POST['submit_3'] == 'no') {
     $show_page_three = '';
     $page = 4;
-    $insert = $connect->prepare("UPDATE table_of_id_" . $_SESSION['loggedInUser'] . " SET rest = ? WHERE dayname = ?");
-    $insert->execute([0, $current_day]);
+    $insert = $connect->prepare("UPDATE weekdata SET rest = ? WHERE dayname = ? AND  userid = ?");
+    $insert->execute([0, $current_day, $_SESSION['loggedInUser']]);
 }
 if (isset($_POST['submit_3']) && $_POST['submit_3'] == 'yes') {
     $show_page_three = '';
     $page = 4;
-    $insert = $connect->prepare("UPDATE table_of_id_" . $_SESSION['loggedInUser'] . " SET rest = ? WHERE dayname = ?");
-    $insert->execute([1, $current_day]);
+    $insert = $connect->prepare("UPDATE weekdata SET rest = ? WHERE dayname = ? AND userid = ?");
+    $insert->execute([1, $current_day, $_SESSION['loggedInUser']]);
 }
 if (isset($_POST['submit_4']) && $_POST['submit_4'] == "Next page") {
     $show_page_four = '';
     $page = 5;
-    $insert = $connect->prepare("UPDATE table_of_id_" . $_SESSION['loggedInUser'] . " SET highlight = ? WHERE dayname = ?;");
-    $insert = $insert->execute([$_POST['highlight'], $current_day]);
+    $insert = $connect->prepare("UPDATE weekdata SET highlight = ? WHERE dayname = ? AND  userid = ?;");
+    $insert = $insert->execute([$_POST['highlight'], $current_day, $_SESSION['loggedInUser']]);
 }
 if (isset($_POST['submit_5']) && $_POST['submit_5'] == "Next page") {
-    $insert = $connect->prepare("UPDATE table_of_id_" . $_SESSION['loggedInUser'] . " SET userscore = ? WHERE dayname = ?;");
-    $insert = $insert->execute([$_POST['userscore'], $current_day]);
+    $insert = $connect->prepare("UPDATE weekdata SET userscore = ? WHERE dayname = ? AND userid = ?;");
+    $insert = $insert->execute([$_POST['userscore'], $current_day, $_SESSION['loggedInUser']]);
     header("location: reveal.php");
     exit();   
 }

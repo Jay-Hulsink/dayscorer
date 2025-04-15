@@ -16,16 +16,15 @@ $current_day = date('l');
 if (isset($_POST['log']) && $_POST['login_username'] != "" && $_POST['login_pass'] != "") {
     $fetch = $connect->prepare("SELECT id, pass FROM users WHERE username = ?");
     $fetch->execute([$_POST['login_username']]);
-    $fetch = $fetch->fetchAll();
+    $fetch = $fetch->fetchAll(PDO::FETCH_ASSOC);
     if (count($fetch) == 0) {
         $warn = "No user found by that name";
         $hide = '';
     } else {
         $fetch = $fetch[0];
-        $id = $fetch[0];
-        $pass = $fetch[1];
+        $id = $fetch['id'];
+        $pass = $fetch['pass'];
         if(password_verify($_POST['login_pass'], $pass)) {
-                session_start();
                 intval($id);
                 $_SESSION['loggedInUser'] = $id;
                 header("location: index.php");
@@ -51,9 +50,6 @@ if (isset($_POST['sign']) && isset($_POST['username']) && $_POST['username'] != 
         $fetch = $fetch->fetch();
         $id = $fetch['id'];
         $str_id = strval($id); 
-        $tablename = "table_of_id_" . $str_id;
-        $usertablecreation = $connect->prepare("CREATE TABLE table_of_id_$str_id (dayname varchar(128), score int, sleep int, work int, rest int, outside int, highlight varchar(128), userscore int, weekofyear int);");
-        $usertablecreation->execute();
         session_start();
         intval($id);
         $_SESSION['loggedInUser'] = $id;

@@ -11,9 +11,9 @@ $current_day = date('l');
 $current_week = date('W');
 
 $dayscore = 0;
-$user_calc_data = $connect->prepare("SELECT * FROM table_of_id_" . $_SESSION['loggedInUser'] . " WHERE dayname = ?;");
+$user_calc_data = $connect->prepare("SELECT * FROM weekdata WHERE userid = ? AND dayname = ?;");
 if ($user_calc_data) {
-    $user_calc_data->execute([$current_day]);
+    $user_calc_data->execute([$_SESSION['loggedInUser'], $current_day]);
     $user_calc_data = $user_calc_data->fetchAll();
     $user_calc_data = $user_calc_data[0];
     foreach($user_calc_data as $num => $data) {
@@ -23,7 +23,6 @@ if ($user_calc_data) {
             $user_calc_data[$num] = $data;
         } 
     }
-    // var_dump($user_calc_data);
     if ($user_calc_data['sleep'] > 6 || $user_calc_data['sleep'] < 10) {
         $dayscore += 15;
     }
@@ -39,8 +38,8 @@ if ($user_calc_data) {
     $dayscore += ($user_calc_data['userscore'] * 4);
 }
 if ($dayscore) {
-    $qry = $connect->prepare("UPDATE table_of_id_" . $_SESSION['loggedInUser'] . " SET score = ?");
-    $qry->execute([$dayscore]);
+    $qry = $connect->prepare("UPDATE weekdata SET score = ? WHERE userid = ? AND dayname = ?");
+    $qry->execute([$dayscore, $_SESSION['loggedInUser'], $current_day]);
 }
 
 ?>

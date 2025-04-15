@@ -36,8 +36,8 @@ if (!isset($_GET['week'])) {
 
     }
     if (!isset($_SESSION['newuser']) || $_SESSION['newuser'] == false) {
-        $qry = $connect->prepare("SELECT score, highlight FROM table_of_id_" . $_SESSION['loggedInUser']);
-        $qry->execute();
+        $qry = $connect->prepare("SELECT score, highlight FROM weekdata WHERE userid = ?");
+        $qry->execute([$_SESSION['loggedInUser']]);
         $daydata = $qry->fetchAll();
         if ($daydata) {
             $daydata = $daydata[0];
@@ -50,7 +50,7 @@ if (!isset($_GET['week'])) {
             }
         }
     }
-    if (isset($daydata['score']) && is_numeric($daydata['score'])) {
+    if (isset($daydata['score']) && $daydata['highlight'] != 'No data yet') {
         $daydata['highlight'] = "Your highlight of today: " . $daydata['highlight'];
         $closs = 'class="progress_bar_background"';
         $dayscore = $daydata['score'];
@@ -65,8 +65,8 @@ if (!isset($_GET['week'])) {
     $show_1 = '';
 } else {
     $show_2 = '';
-    $qry = $connect->prepare("SELECT dayname, score, work, sleep, rest, outside, highlight FROM table_of_id_" . $_SESSION['loggedInUser'] . " WHERE weekofyear = ?");
-    $qry->execute([$current_week]);
+    $qry = $connect->prepare("SELECT dayname, score, work, sleep, rest, outside, highlight FROM weekdata WHERE userid = ? AND weekofyear = ?");
+    $qry->execute([$_SESSION['loggedInUser'], $current_week]);
     $weekdata = $qry->fetchAll();
     $i = 0;
     if ($weekdata) {
